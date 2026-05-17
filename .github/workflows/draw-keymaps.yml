@@ -1,0 +1,19 @@
+name: Draw ZMK keymaps
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "config/**"
+      - ".github/workflows/draw-keymaps.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  draw:
+    uses: caksoylar/keymap-drawer-action@v3.4
+    with:
+      keymap_patterns: "config/corne.keymap"
+      output_folder: "keymap-drawer"
+      amend_commit: false
+      install_branch: "main"
