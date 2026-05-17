@@ -1,6 +1,6 @@
 # Corne OLED Wireless — ZMK Config
 
-Personal ZMK firmware configuration for a **42-key Corne** (nice_nano_v2) wireless split keyboard.
+Personal ZMK firmware configuration for a **42-key Corne** (nice_nano_v2) wireless split keyboard..
 
 Architecture based on [urob/zmk-config](https://github.com/urob/zmk-config).
 
