@@ -12,8 +12,20 @@ This directory contains the `keyd` configuration ([laptop-urob.conf](laptop-urob
 - **QWERTY Layout (`qwerty`)**: A secondary layout with a clean, standard, unmodified QWERTY mapping (no home-row mods, no combos) for gaming or guest typing.
 - **Toggle Shortcut**: Toggle between Colemak-DH and QWERTY at any time using:
   `Meta + Alt + Shift + T`
+- **Vietnamese Input Toggle**: Press `CapsLock` to toggle Vietnamese (Fcitx5 Unikey) on/off.
 
----
+### Vietnamese Input Mode (`CapsLock` toggle)
+
+Pressing `CapsLock` executes the custom `keyd-layout-mode` script which manages a **two-dimensional state model** independently tracking:
+1. **Keyd Layout**: persisted in `/run/keyd-laptop-layout` (`colemakdh` | `qwerty`).
+2. **Fcitx Language**: queried live via `fcitx5-remote` (`us` | `vietnamese`).
+
+When Vietnamese input is toggled:
+- **Language**: Fcitx5 is toggled between English and Vietnamese.
+- **Keyd Layout Preservation**: If you are using `colemakdh`, activating Vietnamese loads `colemakdh-vietnamese` (no home-row mods or horizontal combos) to prevent rapid Telex rolls (e.g. `uo` for `ươ`, `as` for `á`) from triggering accidental modifiers/chords. If you are using `qwerty`, it remains plain QWERTY layout. Toggling back to English restores your exact previous layout (`colemakdh` with full mods/combos or `qwerty`).
+
+> **Why a script?** Using a real shortcut like `Ctrl+Alt+G` would be dangerous because home row mods (`f`=Ctrl, `s`=Alt) could accidentally produce that combo during normal English typing. By using `keyd-layout-mode`, we interact with Fcitx5 via D-Bus directly and securely.
+
 
 ## 2. Key Producibility Table (All Characters)
 
@@ -111,8 +123,7 @@ Thumb keys behave as dual-function hold/taps to activate layers:
 ### Deployment
 To copy and load this configuration to your local system:
 ```bash
-sudo cp laptop-urob.conf /etc/keyd/default.conf
-sudo keyd reload
+sudo ./deploy.sh
 ```
 
 ### Safety / Emergency Stop
